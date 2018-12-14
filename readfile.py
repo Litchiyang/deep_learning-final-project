@@ -1,3 +1,4 @@
+
 import os
 import numpy as np
 import glob
@@ -9,22 +10,23 @@ class CelebA(object):
     def __init__(self, dataset_path):
         self.name = dataset_path
         self.dataset_path = dataset_path
-        self.train_path = os.path.join(dataset_path, './celebA/train')
-        self.val_path = os.path.join(dataset_path, './celebA/val')
+        self.train_path = os.path.join(dataset_path, 'img_align_celeba')
+   
+        self.val_path = os.path.join(dataset_path, 'img_align_celeba')
+        
+        # self.train_pics
+        # self.val_pics
         self.load()
         
         
     def load(self):
         print('Loading {}...'.format(self.name))
-        print('under directory'.format(os.getcwd()))
-        
-        self.train_pics = [os.path.basename(pic) for pic in os.listdir(self.train_path) if os.path.isfile(pic)]
-        self.val_pics = [os.path.basename(pic) for pic in os.listdir(self.val_path) if os.path.isfile(pic)]
-        
-        print('{} dataset finished loading'.format(self.name))
+      
+        self.train_pics = [os.path.join(self.train_path, pic) for pic in os.listdir(self.train_path) if ".jpg" in pic]    #under same directory as current file   
+        self.val_pics = [os.path.join(self.val_path, pic) for pic in os.listdir(self.val_path) if ".jpg" in pic]
 
         
-    def train_next_batch(self, batch_size):
+    def train_next_batch(self, batch_size, image_size):
         pics = self.train_pics
         random_pics = np.random.choice(pics, batch_size)
         images = [load_data(path) for path in random_pics]
