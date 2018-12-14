@@ -102,10 +102,11 @@ class GAN():
 
         #discriminator loss
         #D_loss = -tf.reduce_mean(tf.log(logits_real) + tf.log(1-logits_fake))
-        D_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits
-                (logits=logits_real, labels=tf.ones_like(logits_real)))
-                + tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits
-                (logits=logits_fake, labels=tf.zeros_like(logits_fake)))
+        d_loss_real = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits
+                        (logits=logits_real, labels=tf.ones_like(logits_real)))
+        d_loss_fake = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits
+                        (logits=logits_fake, labels=tf.zeros_like(logits_fake)))
+        D_loss = d_loss_real + d_loss_fake
         tf.summary.scalar('D_loss', D_loss)
         
         return z,d,G_loss, D_loss
