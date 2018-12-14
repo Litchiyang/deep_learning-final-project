@@ -39,12 +39,13 @@ def train(args):
     writer = tf.summary.FileWriter(os.path.join(args.model_root, "logs/"), session.graph)
     
     for i in range(args.iteration):
-        print("iter: ", i)
+        
         
         _, D_loss_curr, D_summary = session.run([d_optimizer, D_loss, summary_op], 
             feed_dict={z: sample_z(args.batch_size, args.dim), d: data_cele.train_next_batch(args.batch_size, args.image_size)})
         _, G_loss_curr = session.run([g_optimizer, G_loss], 
             feed_dict={z: sample_z(args.batch_size, args.dim), d: data_cele.train_next_batch(args.batch_size, args.image_size)})
+        print("iter: ", i, " finished, D loss: ", D_loss_curr, ", G loss: ", G_loss_curr)
         writer.add_summary(D_summary, i)
 #         writer.add_summary(G_summary, i)
         save_tf_model(session, args.model_root, saver, i, pb=True)
