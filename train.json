@@ -8,7 +8,8 @@
         "iteration" : 1000,
         "dim":1024,
         "verbose": true,
-        "istrain": true
+        "istrain": true,
+        "image_size": 64
     },
     "debug": {
         "verbose": true

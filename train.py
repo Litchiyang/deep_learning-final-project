@@ -33,8 +33,10 @@ def train(args):
     session.run(tf.global_variables_initializer())
             
     for i in range(args.iteration):
-        _, D_loss_curr = session.run([d_optimizer, D_loss], feed_dict={z: sample_z(args.batch_size, args.dim), d: np.ones((args.batch_size, 64,64,3))})
-        _, G_loss_curr = session.run([g_optimizer, G_loss], feed_dict={z: sample_z(args.batch_size, args.dim), d: np.ones((args.batch_size, 64,64,3))})    
+        _, D_loss_curr = session.run([d_optimizer, D_loss], 
+            feed_dict={z: sample_z(args.batch_size, args.dim), d: data_cele.train_next_batch(args.batch_size, args.image_size)})
+        _, G_loss_curr = session.run([g_optimizer, G_loss], 
+            feed_dict={z: sample_z(args.batch_size, args.dim), d: data_cele.train_next_batch(args.batch_size, args.image_size)})    
 
 
 def sample_z(batch_size, dim):
@@ -54,5 +56,8 @@ if __name__ == "__main__":
     args = configure()
     print (args.learning_rate)
     train(args)
+
+
+
 
 
