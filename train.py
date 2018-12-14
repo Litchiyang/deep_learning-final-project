@@ -33,6 +33,7 @@ def train(args):
     session.run(tf.global_variables_initializer())
             
     for i in range(args.iteration):
+        print("iter: ", i)
         _, D_loss_curr = session.run([d_optimizer, D_loss], 
             feed_dict={z: sample_z(args.batch_size, args.dim), d: data_cele.train_next_batch(args.batch_size, args.image_size)})
         _, G_loss_curr = session.run([g_optimizer, G_loss], 
