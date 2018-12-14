@@ -1,0 +1,19 @@
+{
+    "defaults": {
+        "paths":{
+            "dataset_path": "~/data"
+        },
+        "learning_rate": 0.01,
+        "batch_size": 20,
+        "iteration" : 1000,
+        "dim":1024,
+        "verbose": true,
+        "istrain": true
+    },
+    "debug": {
+        "verbose": true
+    },
+    "large_lr": {
+        "learning_rate": 0.1
+    }
+}

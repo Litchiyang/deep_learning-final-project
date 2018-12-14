@@ -5,17 +5,22 @@ import utils as utils
 
 
 class CelebA(object):
-    def __init__(self, dataset):
-        self.name = dataset
-        self.train_pics
-        self.val_pics
+    def __init__(self, dataset_path):
+        self.name = dataset_path
+        self.dataset_path = dataset_path
+        self.train_path = os.path.join(dataset_path, './celebA/train')
+        self.val_path = os.path.join(dataset_path, './celebA/val')
+
+        # self.train_pics
+        # self.val_pics
         self.load()
         
         
     def load(self):
         print('Loading {}...'.format(self.name))
-        self.train_pics = [pic for pic in os.listdir('./celebA/train') if os.path.isfile(pic)]    #under same directory as current file
-        self.val_pics = [pic for pic in os.listdir('./celebA/val') if os.path.isfile(pic)]
+
+        self.train_pics = [pic for pic in os.listdir(self.train_path) if os.path.isfile(pic)]    #under same directory as current file
+        self.val_pics = [pic for pic in os.listdir(self.val_path) if os.path.isfile(pic)]
 
         
     def train_next_batch(self, batch_size):
