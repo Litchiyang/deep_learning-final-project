@@ -1,7 +1,8 @@
 {
     "defaults": {
         "paths":{
-            "dataset_path": "~/data"
+            "dataset_path": "~/data",
+            "model_root": "~/models"
         },
         "learning_rate": 0.01,
         "batch_size": 20,

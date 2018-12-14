@@ -89,16 +89,18 @@ class GAN():
         d = tf.placeholder(tf.float32, shape= [None, self.image_size, self.image_size, 3], name = 'd')
 
         gen_output = self.generator(z)
-
+        viz = tf.cast(gen_output, tf.uint8, name='gen_im')
+        tf.summary.image('gen_im', viz, max_outputs=20)
         logits_fake = self.discriminator(gen_output)     
         logits_real = self.discriminator(d, reuse=True)
 
         #generator loss
         G_loss = -tf.reduce_mean(tf.log(logits_fake))
-
+        tf.summary.scalar('G_loss', G_loss)
         #discriminator loss
         D_loss = -tf.reduce_mean(tf.log(logits_real) + tf.log(1-logits_fake))
-
+        tf.summary.scalar('D_loss', D_loss)
+        
         return z,d,G_loss, D_loss
 
 
