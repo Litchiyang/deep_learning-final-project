@@ -21,12 +21,14 @@ def train(args):
 
     #optimizer 
     theta_D = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='dis_')
-    d_optimizer = tf.train.AdamOptimizer(learning_rate = args.learning_rate)\
-                .minimize(D_loss, var_list = theta_D)
-
+    #d_optimizer = tf.train.AdamOptimizer(learning_rate = args.learning_rate)\
+                #.minimize(D_loss, var_list = theta_D)
+    d_optimizer = tf.train.AdamOptimizer(learning_rate = args.d_learning_rate).minimize(D_loss)
+    
     theta_G = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='gen_')
-    g_optimizer = tf.train.AdamOptimizer(learning_rate = args.learning_rate)\
-                .minimize(G_loss, var_list=theta_G)
+   # g_optimizer = tf.train.AdamOptimizer(learning_rate = args.learning_rate)\
+                #.minimize(G_loss, var_list=theta_G)
+    g_optimizer = tf.train.AdamOptimizer(learning_rate = args.g_learning_rate).minimize(G_loss)
     
     #initialize
     saver = tf.train.Saver()
@@ -40,7 +42,7 @@ def train(args):
     
     for i in range(args.iteration):
         
-        
+
         _, D_loss_curr, D_summary = session.run([d_optimizer, D_loss, summary_op], 
             feed_dict={z: sample_z(args.batch_size, args.dim), d: data_cele.train_next_batch(args.batch_size, args.image_size)})
         _, G_loss_curr = session.run([g_optimizer, G_loss], 

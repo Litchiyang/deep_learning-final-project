@@ -70,7 +70,7 @@ def load_data(image_path, input_height, input_width, resize_height=64, resize_wi
     else:
         cropped_img = scipy.misc.imresize(img, [resize_height, resize_width])
 
-    img_trans = transform(cropped_img)  # from [0, 255] to [-1., 1.]
+    img_trans = transform(cropped_img)  # from [0, 255] to [0, 1]
     img_flip = random_flip(img_trans)
 
     if is_gray_scale and (img_flip.ndim == 2):
@@ -131,7 +131,7 @@ def print_metrics(itr, kargs):
 
 
 def transform(img):
-    return img / 127.5 - 1.0
+    return img/255
 
 
 def inverse_transform(img):
