@@ -52,7 +52,8 @@ def train(args):
         print("iter: ", i, " finished, D loss: ", D_loss_curr, ", G loss: ", G_loss_curr)
         writer.add_summary(D_summary, i)
 #         writer.add_summary(G_summary, i)
-        save_tf_model(session, args.model_root, saver, i, pb=True)
+        if i % 100 == 0:
+            save_tf_model(session, args.model_root, saver, i, pb=True)
         
         
 
