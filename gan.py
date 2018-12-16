@@ -201,22 +201,22 @@ class GAN():
 
 
     def build_model(self):
-        z = tf.placeholder(tf.float32, shape = [None, self.z_dim], name = 'z')
+        self.z = tf.placeholder(tf.float32, shape = [None, self.z_dim], name = 'z')
         d = tf.placeholder(tf.float32, shape= [None, self.image_size, self.image_size, 3], name = 'd')
 
-        gen_output = self.generator(z)
-        gen_output_vis = gen_output*255
+        self.gen_output = self.generator(self.z)
+        gen_output_vis = self.gen_output*255
         viz = tf.cast(gen_output_vis, tf.uint8, name='gen_im')
         tf.summary.image('gen_im', viz, max_outputs=20)
-        logits_fake = self.discriminator(gen_output)     
+        logits_fake = self.discriminator(self.gen_output)     
         logits_real = self.discriminator(d, reuse=True)
 
         #generator loss
         
         #G_loss = -tf.reduce_mean(tf.log(logits_fake))
-        G_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits = logits_fake, labels = tf.ones_like(logits_fake)), name = "reduced_mean")
+        self.G_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits = logits_fake, labels = tf.ones_like(logits_fake)), name = "reduced_mean")
         G_loss_sigmoid = tf.nn.sigmoid_cross_entropy_with_logits(logits = logits_fake, labels = tf.ones_like(logits_fake), name = 'cross_entropy')
-        tf.summary.scalar('G_loss', G_loss)
+        tf.summary.scalar('G_loss', self.G_loss)
 
         #discriminator loss
         #D_loss = -tf.reduce_mean(tf.log(logits_real) + tf.log(1-logits_fake))
@@ -226,13 +226,7 @@ class GAN():
     
         tf.summary.scalar('D_loss', D_loss)
         
-        return z,d,G_loss, D_loss
-
-      
-        
-
-
-
+        return self.z,d, self.G_loss, D_loss
 
 
 
