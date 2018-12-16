@@ -131,7 +131,7 @@ def print_metrics(itr, kargs):
 
 
 def transform(img):
-    return img/255
+    return img/255*2-1.0
 
 
 def inverse_transform(img):
