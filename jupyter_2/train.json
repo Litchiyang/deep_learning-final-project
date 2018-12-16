@@ -1,0 +1,22 @@
+{
+    "defaults": {
+        "paths":{
+            "dataset_path": "~/data",
+            "model_root": "~/models"
+        },
+        "g_learning_rate": 0.01,
+        "d_learning_rate":0.005,
+        "batch_size": 64,
+        "iteration" : 100,
+        "dim":1024,
+        "verbose": true,
+        "istrain": true,
+        "image_size": 64
+    },
+    "debug": {
+        "verbose": true
+    },
+    "large_lr": {
+        "learning_rate": 0.1
+    }
+}
